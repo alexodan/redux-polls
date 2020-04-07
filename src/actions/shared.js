@@ -1,30 +1,19 @@
-import { getInitialData } from "../utils/api";
+import { getInitialData } from '../utils/api';
+import { loadUsers } from './users';
+import { loadPolls } from './polls';
+import { setAuthedUser } from './authedUser';
+import { showLoading, hideLoading } from 'react-redux-loading';
 
-export const LOAD_INITIAL_DATA = "LOAD_INITIAL_DATA";
-
-function loadInitialData(users, polls) {
-  return {
-    type: LOAD_INITIAL_DATA,
-    users,
-    polls
-  };
-}
+const AUTHED_ID = 'tylermcginnis';
 
 export function handleInitialDataLoad() {
-  return dispatch => {
-    getInitialData().then(({ users, polls }) => {
-      dispatch(loadInitialData(users, polls));
-    });
-  };
+	return (dispatch) => {
+		dispatch(showLoading());
+		getInitialData().then(({ users, polls }) => {
+			dispatch(loadUsers(users));
+			dispatch(loadPolls(polls));
+			dispatch(setAuthedUser(AUTHED_ID));
+			dispatch(hideLoading());
+		});
+	};
 }
-
-// conecte redux con el index
-// app component hace el fectch de initial data
-// users y polls reducers handlean load initial data pero raro
-//    retornan un objeto en lugar de un array
-
-// next steps:
-// build the dashboard?
-
-// mercadolibre
-// auth0

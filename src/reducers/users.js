@@ -1,11 +1,13 @@
-import { LOAD_INITIAL_DATA } from "../actions/shared";
+import { LOAD_USERS } from '../actions/users';
 
-export function users(state = [], action) {
-  switch (action.type) {
-    case LOAD_INITIAL_DATA:
-      console.log(action.users);
-      return action.users;
-    default:
-      return state;
-  }
+export function users(state = {}, action) {
+	switch (action.type) {
+		case LOAD_USERS:
+			return {
+				...state,
+				...action.users
+			};
+		default:
+			return state;
+	}
 }

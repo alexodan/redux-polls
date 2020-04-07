@@ -1,10 +1,13 @@
-import { LOAD_INITIAL_DATA } from "../actions/shared";
+import { LOAD_POLLS } from '../actions/polls';
 
-export function polls(state = [], action) {
-  switch (action.type) {
-    case LOAD_INITIAL_DATA:
-      return action.polls;
-    default:
-      return state;
-  }
+export function polls(state = {}, action) {
+	switch (action.type) {
+		case LOAD_POLLS:
+			return {
+				...state,
+				...action.polls
+			};
+		default:
+			return state;
+	}
 }
