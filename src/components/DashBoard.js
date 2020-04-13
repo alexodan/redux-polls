@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 class DashBoard extends React.Component {
 	state = {
@@ -38,7 +39,13 @@ class DashBoard extends React.Component {
 					</button>
 				</div>
 				<div className="dashboard-list">
-					<ul>{list.map((poll) => <li key={poll.id}>{poll.question}</li>)}</ul>
+					<ul>
+						{list.map((poll) => (
+							<li key={poll.id}>
+								<Link to={`polls/${poll.id}`}>{poll.question}</Link>
+							</li>
+						))}
+					</ul>
 				</div>
 			</div>
 		);

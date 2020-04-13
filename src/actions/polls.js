@@ -1,4 +1,5 @@
 import { savePoll } from '../utils/api';
+import { showLoading, hideLoading } from 'react-redux-loading';
 
 export const LOAD_POLLS = 'LOAD_POLLS';
 export const SAVE_POLL = 'SAVE_POLL';
@@ -18,12 +19,14 @@ export function loadPolls(polls) {
 }
 
 export function handleCreatePoll(poll) {
-	return (dispatch) => {
-		dispatch(saveNewPoll(poll));
-		savePoll(poll);
-		// .catch(err => {
-		//   console.error(err);
-		//   dispatch(removePoll());
-		// })
+	return (dispatch, getState) => {
+		const { authedUser } = getState();
+		dispatch(showLoading());
+		return savePoll({
+			...poll,
+			author: authedUser
+		})
+			.then((poll) => dispatch(saveNewPoll(poll)))
+			.then(() => dispatch(hideLoading()));
 	};
 }
